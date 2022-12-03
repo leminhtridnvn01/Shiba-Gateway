@@ -1,0 +1,16 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/booking/{catchAll}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "shiba-booking-prod-pbl-tpsota.mo5.mogenius.io",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/api/booking/{catchAll}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
+    }
+  ]
+}

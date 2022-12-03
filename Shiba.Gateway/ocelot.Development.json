@@ -6,7 +6,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "shiba-booking-prod-pbl-tpsota.mo5.mogenius.io",
-          "Port": 5000
+          "Port": 443
         }
       ],
       "UpstreamPathTemplate": "/api/booking/{catchAll}",

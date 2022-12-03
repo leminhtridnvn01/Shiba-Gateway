@@ -19,7 +19,7 @@ Console.WriteLine("Add Ocelot");
 
 try
 {
-    string url = "https://siba-gateway-nl2rdx:8000/api/booking/locations/cites";
+    string url = "https://localhost:8001/api/booking/locations/cites";
 
     WebRequest myReq = WebRequest.Create(url);
     myReq.Method = "GET";

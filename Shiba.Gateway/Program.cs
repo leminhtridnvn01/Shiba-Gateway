@@ -3,7 +3,19 @@ using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
+var envName = string.IsNullOrEmpty(builder.Environment.EnvironmentName) ? "production" : builder.Environment.EnvironmentName.ToLower();
+IConfiguration configuration = new ConfigurationBuilder()
+    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+    .AddJsonFile("ocelot.json", false, true)
+    .AddJsonFile($"ocelot.{envName}.json", true, true)
+    .AddJsonFile("appsettings.json", false, true)
+    .AddJsonFile($"appsettings.{envName}.json", true, true)
+    .AddEnvironmentVariables().Build();
 
+builder.Services.AddHealthChecks();
+Console.WriteLine(envName);
+builder.Services.AddOcelot(configuration);
+Console.WriteLine("Add Ocelot");
 // Add services to the container.
 builder.Services.AddMvc(option =>
 {
@@ -17,18 +29,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var envName = string.IsNullOrEmpty(builder.Environment.EnvironmentName) ? "production" : builder.Environment.EnvironmentName.ToLower();
-IConfiguration configuration = new ConfigurationBuilder()
-    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-    .AddJsonFile("ocelot.json", false, true)
-    .AddJsonFile($"ocelot.{envName}.json", true, true)
-    .AddJsonFile("appsettings.json", false, true)
-    .AddJsonFile($"appsettings.{envName}.json", true, true)
-    .AddEnvironmentVariables().Build();
-
-builder.Services.AddHealthChecks();
-Console.WriteLine(envName);
-builder.Services.AddOcelot(configuration);
 
 
 var app = builder.Build();
@@ -41,7 +41,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseOcelot().Wait();
+Console.WriteLine("PassOcelot");
 app.UseHttpsRedirection();
+Console.WriteLine("PassHttpsRedirection");
 app.UseCors(x => x
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
@@ -50,10 +52,15 @@ app.UseCors(x => x
                                                     //.AllowCredentials()
                 .WithExposedHeaders("*")
                 .SetPreflightMaxAge(TimeSpan.FromSeconds(600)));
-app.UseHealthChecks("/healthcheck");
-app.UseRouting();
-app.UseAuthorization();
+Console.WriteLine("PassCors");
 
+app.UseHealthChecks("/healthcheck");
+Console.WriteLine("PassHealthChecks");
+app.UseRouting();
+Console.WriteLine("PassRouting");
+app.UseAuthorization();
+Console.WriteLine("PassAuthorization");
 app.MapControllers();
+Console.WriteLine("PassMapControllers");
 
 app.Run();

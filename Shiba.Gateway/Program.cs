@@ -1,7 +1,9 @@
-using Microsoft.AspNetCore.HttpOverrides;
 using Ocelot.DependencyInjection;
+using Ocelot.Logging;
 using Ocelot.Middleware;
+using Ocelot.Tracing.Butterfly;
 using System.Net;
+using System.Net.Sockets;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,27 +16,23 @@ IConfiguration configuration = new ConfigurationBuilder()
     .AddJsonFile($"appsettings.{envName}.json", true, true)
     .AddEnvironmentVariables().Build();
 
+
 builder.Services.AddOcelot(configuration);
 Console.WriteLine("Add Ocelot");
-
 try
 {
-    string url = "http://0.0.0.0:8001/api/booking/locations/cites";
-
-    WebRequest myReq = WebRequest.Create(url);
-    myReq.Method = "GET";
-
-    UTF8Encoding enc = new UTF8Encoding();
-
-    WebResponse wr = myReq.GetResponse();
-    Stream receiveStream = wr.GetResponseStream();
-    StreamReader reader = new StreamReader(receiveStream, Encoding.UTF8);
-    string content = reader.ReadToEnd();
-    Console.WriteLine(content);
+    var host = Dns.GetHostEntry(Dns.GetHostName());
+    foreach (var ip in host.AddressList)
+    {
+        if (ip.AddressFamily == AddressFamily.InterNetwork)
+        {
+            Console.WriteLine(ip.ToString());
+        }
+    }
 }
-catch (Exception ex)
+catch(Exception ex)
 {
-    Console.WriteLine(ex.Message.ToString());
+    Console.WriteLine(ex.Message);
 }
 
 var app = builder.Build();
@@ -43,6 +41,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     Console.WriteLine("This is Development");
+}
+else
+{
+    app.UseHsts();
+    Console.WriteLine("UseHsts");
 }
 app.UseOcelot().Wait();
 Console.WriteLine("PassOcelot");

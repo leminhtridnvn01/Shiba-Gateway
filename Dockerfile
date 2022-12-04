@@ -5,6 +5,7 @@
 FROM mcr.microsoft.com/windows/nanoserver AS network
 WORKDIR /net
 RUN curl shiba-booking-prod-pbl-tpsota.mo5.mogenius.io
+RUN mcr.microsoft.com/windows/nanoserver ping shiba-booking-prod-pbl-tpsota.mo5.mogenius.io
 RUN mcr.microsoft.com/windows/nanoserver ping google.com
 RUN mcr.microsoft.com/windows/nanoserver ping 8.8.8.8
 

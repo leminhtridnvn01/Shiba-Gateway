@@ -11,9 +11,8 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/windows/nanoserver:ltsc2022 AS network
+FROM mcr.microsoft.com/dotnet/aspnet:6.0-nanoserver-1809 AS network
 WORKDIR /app/net
-RUN mcr.microsoft.com/windows/nanoserver:2022 
 RUN ping shiba-booking-prod-pbl-tpsota.mo5.mogenius.io
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build

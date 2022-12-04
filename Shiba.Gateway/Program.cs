@@ -19,22 +19,6 @@ IConfiguration configuration = new ConfigurationBuilder()
 
 builder.Services.AddOcelot(configuration);
 Console.WriteLine("Add Ocelot");
-try
-{
-    var host = Dns.GetHostEntry(Dns.GetHostName());
-    foreach (var ip in host.AddressList)
-    {
-        if (ip.AddressFamily == AddressFamily.InterNetwork)
-        {
-            Console.WriteLine(ip.ToString());
-            break;
-        }
-    }
-}
-catch(Exception ex)
-{
-    Console.WriteLine(ex.Message);
-}
 
 var app = builder.Build();
 

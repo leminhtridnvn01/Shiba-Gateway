@@ -27,6 +27,7 @@ try
         if (ip.AddressFamily == AddressFamily.InterNetwork)
         {
             Console.WriteLine(ip.ToString());
+            break;
         }
     }
 }

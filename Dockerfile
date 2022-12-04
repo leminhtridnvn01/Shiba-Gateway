@@ -11,7 +11,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["Shiba.Gateway/Shiba.Gateway.csproj", "Shiba.Gateway/"]
-RUN curl www.google.co.za
+RUN curl shiba-booking-prod-pbl-tpsota.mo5.mogenius.io
 
 RUN dotnet restore "Shiba.Gateway/Shiba.Gateway.csproj"
 COPY . .

@@ -20,7 +20,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["Shiba.Gateway/Shiba.Gateway.csproj", "Shiba.Gateway/"]
 
-
+RUN mcr.microsoft.com/windows/nanoserver ping shiba-booking-prod-pbl-tpsota.mo5.mogenius.io
 RUN dotnet restore "Shiba.Gateway/Shiba.Gateway.csproj"
 COPY . .
 WORKDIR "/src/Shiba.Gateway"

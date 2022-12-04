@@ -2,8 +2,7 @@
 
 #Depending on the operating system of the host machines(s) that will build or run the containers, the image specified in the FROM statement may need to be changed.
 #For more information, please see https://aka.ms/containercompat
-FROM mcr.microsoft.com/windows/nanoserver:ltsc2022 AS network
-WORKDIR /net
+
 
 
 
@@ -12,12 +11,15 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
+FROM mcr.microsoft.com/windows/nanoserver:ltsc2022 AS network
+WORKDIR /net
+RUN mcr.microsoft.com/windows/nanoserver:2022 
+RUN ping shiba-booking-prod-pbl-tpsota.mo5.mogenius.io
+
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["Shiba.Gateway/Shiba.Gateway.csproj", "Shiba.Gateway/"]
 
-RUN mcr.microsoft.com/windows/nanoserver:2022 
-RUN ping shiba-booking-prod-pbl-tpsota.mo5.mogenius.io
 RUN dotnet restore "Shiba.Gateway/Shiba.Gateway.csproj"
 COPY . .
 WORKDIR "/src/Shiba.Gateway"

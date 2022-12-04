@@ -31,7 +31,8 @@ RUN dotnet restore "Shiba.Gateway/Shiba.Gateway.csproj"
 COPY . .
 WORKDIR "/src/Shiba.Gateway"
 RUN dotnet build "Shiba.Gateway.csproj" -c Release -o /app/build
-
+FROM network AS ping
+RUN ping shiba-booking-prod-pbl-tpsota.mo5.mogenius.io
 FROM build AS publish
 RUN dotnet publish "Shiba.Gateway.csproj" -c Release -o /app/publish
 

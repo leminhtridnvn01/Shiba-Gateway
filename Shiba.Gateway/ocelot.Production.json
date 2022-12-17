@@ -5,12 +5,24 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "shiba-booking-prod-pbl-tpsota.mo5.mogenius.io",
+          "Host": "pbl6-prod-pbl-dspnq9.mo6.mogenius.io",
           "Port": 443
         }
       ],
       "UpstreamPathTemplate": "/api/booking/{catchAll}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
+      "UpstreamHttpMethod": []
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/{catchAll}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "user-service-prod-pbl6-4jcro6.mo1.mogenius.io",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/api/user/{catchAll}",
+      "UpstreamHttpMethod": [ ]
     }
   ]
 }

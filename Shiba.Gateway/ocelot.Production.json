@@ -5,7 +5,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "pbl6-prod-pbl-dspnq9.mo6.mogenius.io",
+          "Host": "shiba-booking-prod-pbl-tpsota.mo5.mogenius.io",
           "Port": 443
         }
       ],
